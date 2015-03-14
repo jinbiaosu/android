@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vein.accountsoft.activity"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.0.0.1" >
 
     <uses-sdk android:minSdkVersion="15" />
+
+    <!-- 其中AUTH_SERVICE是用来连接小米的Auth服务的，GET_ACCOUNTS用来获取系统中已登陆的小米帐号信息的 -->
+    <uses-permission android:name="com.xiaomi.permission.AUTH_SERVICE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -64,6 +72,27 @@
             android:name="com.open.accountsoft.activity.FlagManage"
             android:label="@string/flagmanage" >
         </activity>
+
+        <!-- mi activity && mi service -->
+        <activity
+            android:name="com.xiaomi.account.openauth.AuthorizeActivity"
+            android:configChanges="orientation"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="com.xiaomi.account.openauth.action.AUTH" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".ui.MyMockService"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="com.open.accountsoft.service.test.mock.empty.service" >
+                </action>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.open.accountsoft.activity;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +12,59 @@ import android.widget.Toast;
 
 import com.open.accountsoft.dao.PwdDAO;
 import com.vein.accountsoft.activity.R;
+import com.xiaomi.account.openauth.XiaomiOAuthorize;
+import com.xiaomi.account.openauth.XiaomiOAuthorize.OnOAuthInterface;
+import com.xiaomi.auth.AuthConstants;
 
-public class Login extends Activity {
+public class Login extends Activity implements OnOAuthInterface {
 	EditText txtlogin;// 创建EditText对象
-	Button btnlogin, btnclose;// 创建两个Button对象
+	Button btnlogin, btnclose, miloginbtn;// 创建两个Button对象
 
+	  private static String USER_PROFILE_PATH = "/user/profile";
+
+	    private static String USER_RELATION_PATH = "/user/relation";
+
+	    public static int REQUESTCODE_TOKEN = 10001;
+
+	    public static int REQUESTCODE_CODE = 10002;
+
+	    Button mGetToken;
+
+	    Button mGetCode;
+
+	    Button mProfile;
+
+	    Button mRelation;
+
+	    String userId;
+
+	    Long clientId = 179887661252608L;
+
+	    String redirectUri = "http://xiaomi.com";
+
+	    String clientSecret = "KIV/4Ittm17a4pIvzNM2wA==";
+
+	    String code;
+
+	    String state;
+
+	    String tokenType;
+
+	    String macKey;
+
+	    String macAlgorithm;
+
+	    String expiresIn;
+
+	    String scope;
+
+	    private String accessToken;
+
+	    String refreshToken;
+
+	    String error;
+
+	    String errorDescription;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -25,6 +74,8 @@ public class Login extends Activity {
 		txtlogin = (EditText) findViewById(R.id.txtLogin);// 获取密码文本框
 		btnlogin = (Button) findViewById(R.id.btnLogin);// 获取登录按钮
 		btnclose = (Button) findViewById(R.id.btnClose);// 获取取消按钮
+		miloginbtn = (Button) findViewById(R.id.miauth_log);
+		miloginbtn.setOnClickListener(new MiLonginListener());
 
 		btnlogin.setOnClickListener(new OnClickListener() {// 为登录按钮设置监听事件
 			@Override
@@ -60,4 +111,37 @@ public class Login extends Activity {
 			}
 		});
 	}
+
+	class MiLonginListener implements View.OnClickListener {
+
+		@Override
+		public void onClick(View arg0) {
+			Bundle options = new Bundle();
+			options.putString(AuthConstants.EXTRA_SCOPE, String.valueOf(1));
+
+			XiaomiOAuthorize.startGetAccessToken(Login.this, clientId,
+					redirectUri, options, // options
+					REQUESTCODE_TOKEN);
+		}
+
+	}
+
+	@Override
+	public void onGetAccessTokenDirectly(Bundle bundle) {
+	       processAuthResult(bundle);
+	}
+    private void processAuthResult(Bundle bundle) {
+        accessToken = bundle.getString("access_token");
+        expiresIn = bundle.getString("expires_in");
+        scope = bundle.getString("scope");
+        state = bundle.getString("state");
+        tokenType = bundle.getString("token_type");
+        macKey = bundle.getString("mac_key");
+        macAlgorithm = bundle.getString("mac_algorithm");
+//        mContentView.setText("accessToken=" + accessToken + ",expiresIn=" + expiresIn
+//                + ",scope=" + scope
+//                + ",state=" + state + ",tokenType=" + tokenType + ",macKey=" + macKey
+//                + ",macAlogorithm="
+//                + macAlgorithm);
+    }
 }
