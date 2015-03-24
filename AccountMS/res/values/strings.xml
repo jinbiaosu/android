@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="main">个人理财通</string>
-    <string name="app_name">个人理财通</string>
+    <string name="main">个人记账薄</string>
+    <string name="app_name">个人记账薄</string>
     <string name="login">系统登录</string>
     <string name="addoutaccount">新增支出</string>
     <string name="addinaccount">新增收入</string>
