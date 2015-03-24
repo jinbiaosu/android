@@ -21,7 +21,7 @@ public final class R {
         public static final int addoutaccount=0x7f020002;
         public static final int appicon=0x7f020003;
         public static final int exit=0x7f020004;
-        public static final int icon=0x7f020005;
+        public static final int ic_launcher=0x7f020005;
         public static final int img_splash=0x7f020006;
         public static final int inaccountinfo=0x7f020007;
         public static final int outaccountinfo=0x7f020008;
