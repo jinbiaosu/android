@@ -1,6 +1,5 @@
 package com.open.accountsoft.activity;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,11 +37,11 @@ public class Login extends Activity implements OnOAuthInterface {
 
 	    String userId;
 
-	    Long clientId = 179887661252608L;
+	    Long clientId = 2882303761517315345L;
 
 	    String redirectUri = "http://xiaomi.com";
 
-	    String clientSecret = "KIV/4Ittm17a4pIvzNM2wA==";
+	    String clientSecret = "lR7iYaCjjHxngLlWThiPVQ==";
 
 	    String code;
 
