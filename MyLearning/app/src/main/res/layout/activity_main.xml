@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="#668B8B">
+
+    <LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+     <Button
+         android:id="@+id/lesson1_btn"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:text="@string/lesson1_btn"/>
+
+        <Button
+            android:id="@+id/lesson2_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="钟表"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/lesson3_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="BaseAdapter Demo"/>
+    </LinearLayout>
+</RelativeLayout>
