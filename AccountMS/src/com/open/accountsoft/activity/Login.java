@@ -1,6 +1,5 @@
 package com.open.accountsoft.activity;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.open.accountsoft.dao.PwdDAO;
@@ -18,6 +18,7 @@ import com.xiaomi.auth.AuthConstants;
 
 public class Login extends Activity implements OnOAuthInterface {
 	EditText txtlogin;// 创建EditText对象
+	TextView milogintv;
 	Button btnlogin, btnclose, miloginbtn;// 创建两个Button对象
 
 	  private static String USER_PROFILE_PATH = "/user/profile";
@@ -38,11 +39,11 @@ public class Login extends Activity implements OnOAuthInterface {
 
 	    String userId;
 
-	    Long clientId = 179887661252608L;
+	    Long clientId = 2882303761517315345L;
 
 	    String redirectUri = "http://xiaomi.com";
 
-	    String clientSecret = "KIV/4Ittm17a4pIvzNM2wA==";
+	    String clientSecret = "lR7iYaCjjHxngLlWThiPVQ==";
 
 	    String code;
 
@@ -75,7 +76,12 @@ public class Login extends Activity implements OnOAuthInterface {
 		btnlogin = (Button) findViewById(R.id.btnLogin);// 获取登录按钮
 		btnclose = (Button) findViewById(R.id.btnClose);// 获取取消按钮
 		miloginbtn = (Button) findViewById(R.id.miauth_log);
-		miloginbtn.setOnClickListener(new MiLonginListener());
+		milogintv=(TextView)findViewById(R.id.miauth_tv);
+		
+		milogintv.setVisibility(View.GONE);
+		miloginbtn.setVisibility(View.GONE);
+		
+//		miloginbtn.setOnClickListener(new MiLonginListener());
 
 		btnlogin.setOnClickListener(new OnClickListener() {// 为登录按钮设置监听事件
 			@Override
@@ -116,12 +122,12 @@ public class Login extends Activity implements OnOAuthInterface {
 
 		@Override
 		public void onClick(View arg0) {
-			Bundle options = new Bundle();
-			options.putString(AuthConstants.EXTRA_SCOPE, String.valueOf(1));
-
-			XiaomiOAuthorize.startGetAccessToken(Login.this, clientId,
-					redirectUri, options, // options
-					REQUESTCODE_TOKEN);
+//			Bundle options = new Bundle();
+//			options.putString(AuthConstants.EXTRA_SCOPE, String.valueOf(1));
+//
+//			XiaomiOAuthorize.startGetAccessToken(Login.this, clientId,
+//					redirectUri, options, // options
+//					REQUESTCODE_TOKEN);
 		}
 
 	}
