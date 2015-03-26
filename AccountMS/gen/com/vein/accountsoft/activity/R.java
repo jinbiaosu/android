@@ -41,15 +41,15 @@ public final class R {
         public static final int btnInSave=0x7f060011;
         public static final int btnLogin=0x7f06003b;
         public static final int btnSave=0x7f06001e;
-        public static final int btnSet=0x7f060047;
+        public static final int btnSet=0x7f060048;
         public static final int btnflagCancel=0x7f060003;
         public static final int btnflagSave=0x7f060004;
-        public static final int btnflaginfo=0x7f060041;
-        public static final int btnininfo=0x7f060040;
-        public static final int btnoutinfo=0x7f06003f;
-        public static final int btnsetCancel=0x7f060046;
+        public static final int btnflaginfo=0x7f060042;
+        public static final int btnininfo=0x7f060041;
+        public static final int btnoutinfo=0x7f060040;
+        public static final int btnsetCancel=0x7f060047;
         public static final int flagmanage=0x7f06001f;
-        public static final int gvInfo=0x7f06003d;
+        public static final int gvInfo=0x7f06003e;
         public static final int initem=0x7f060005;
         public static final int inoutitem=0x7f06002a;
         public static final int inouttitle=0x7f06002b;
@@ -59,13 +59,14 @@ public final class R {
         public static final int linearLayout1=0x7f060027;
         public static final int linearLayout2=0x7f060028;
         public static final int lvinaccountinfo=0x7f060029;
-        public static final int lvinfo=0x7f060042;
-        public static final int lvoutaccountinfo=0x7f06003e;
+        public static final int lvinfo=0x7f060043;
+        public static final int lvoutaccountinfo=0x7f06003f;
         public static final int miauth_log=0x7f06003c;
+        public static final int miauth_tv=0x7f06003d;
         public static final int spInOutType=0x7f060031;
         public static final int spInType=0x7f06000b;
         public static final int spType=0x7f060018;
-        public static final int splash_btn=0x7f060043;
+        public static final int splash_btn=0x7f060044;
         public static final int tvAddress=0x7f060019;
         public static final int tvFlag=0x7f060001;
         public static final int tvFlagManage=0x7f060020;
@@ -82,7 +83,7 @@ public final class R {
         public static final int tvLogin=0x7f060038;
         public static final int tvMark=0x7f06001b;
         public static final int tvMoney=0x7f060013;
-        public static final int tvPwd=0x7f060044;
+        public static final int tvPwd=0x7f060045;
         public static final int tvTime=0x7f060015;
         public static final int tvType=0x7f060017;
         public static final int txtAddress=0x7f06001a;
@@ -99,7 +100,7 @@ public final class R {
         public static final int txtLogin=0x7f060039;
         public static final int txtMark=0x7f06001c;
         public static final int txtMoney=0x7f060014;
-        public static final int txtPwd=0x7f060045;
+        public static final int txtPwd=0x7f060046;
         public static final int txtTime=0x7f060016;
     }
     public static final class layout {

@@ -4,7 +4,7 @@
     android:versionCode="2"
     android:versionName="1.0.0.1" >
 
-    <uses-sdk android:minSdkVersion="15" />
+    <uses-sdk android:minSdkVersion="8" />
 
     <!-- 其中AUTH_SERVICE是用来连接小米的Auth服务的，GET_ACCOUNTS用来获取系统中已登陆的小米帐号信息的 -->
     <uses-permission android:name="com.xiaomi.permission.AUTH_SERVICE" />
