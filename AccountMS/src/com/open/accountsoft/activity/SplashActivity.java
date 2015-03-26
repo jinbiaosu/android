@@ -16,7 +16,6 @@ public class SplashActivity extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
 		splash_loginButton = (Button) findViewById(R.id.splash_btn);
