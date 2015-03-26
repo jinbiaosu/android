@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.open.accountsoft.dao.OutaccountDAO;
 import com.open.accountsoft.model.Tb_outaccount;
+import com.open.accountsoft.utils.WindowUtils;
 import com.vein.accountsoft.activity.R;
 
 public class AddOutaccount extends Activity {
@@ -41,6 +43,15 @@ public class AddOutaccount extends Activity {
 		btnSaveButton = (Button) findViewById(R.id.btnSave);// 获取保存按钮
 		btnCancelButton = (Button) findViewById(R.id.btnCancel);// 获取取消按钮
 
+		new Handler().postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				WindowUtils.showPopupWindow(AddOutaccount.this);
+
+			}
+		}, 1000 * 1);
+		
 		txtTime.setOnClickListener(new OnClickListener() {// 为时间文本框设置单击监听事件
 
 			@Override
@@ -127,5 +138,18 @@ public class AddOutaccount extends Activity {
 		// 显示设置的时间
 		txtTime.setText(new StringBuilder().append(mYear).append("-")
 				.append(mMonth + 1).append("-").append(mDay));
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		new Handler().postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				WindowUtils.showPopupWindow(AddOutaccount.this);
+
+			}
+		}, 1000 * 1);
 	}
 }

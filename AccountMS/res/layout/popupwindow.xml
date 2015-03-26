@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200px"
+    android:layout_height="150px"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/popup_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#E6E6FA"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/positiveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="计算器"
+            android:textColor="#000080" />
+
+        <Button
+            android:id="@+id/negativeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/positiveBtn"
+            android:text="hello"
+            android:textColor="#000080" />
+    </RelativeLayout>
+
+</LinearLayout>

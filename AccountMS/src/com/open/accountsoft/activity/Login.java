@@ -3,6 +3,7 @@ package com.open.accountsoft.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.open.accountsoft.dao.PwdDAO;
+import com.open.accountsoft.utils.WindowUtils;
 import com.vein.accountsoft.activity.R;
 import com.xiaomi.account.openauth.XiaomiOAuthorize;
 import com.xiaomi.account.openauth.XiaomiOAuthorize.OnOAuthInterface;
@@ -81,6 +83,7 @@ public class Login extends Activity implements OnOAuthInterface {
 		milogintv.setVisibility(View.GONE);
 		miloginbtn.setVisibility(View.GONE);
 		
+
 //		miloginbtn.setOnClickListener(new MiLonginListener());
 
 		btnlogin.setOnClickListener(new OnClickListener() {// 为登录按钮设置监听事件

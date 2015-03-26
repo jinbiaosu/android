@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -13,9 +14,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.open.accountsoft.dao.InaccountDAO;
 import com.open.accountsoft.model.Tb_inaccount;
+import com.open.accountsoft.utils.WindowUtils;
 import com.vein.accountsoft.activity.R;
 
 public class AddInaccount extends Activity {
@@ -41,7 +42,18 @@ public class AddInaccount extends Activity {
 		spInType = (Spinner) findViewById(R.id.spInType);// 获取类别下拉列表
 		btnInSaveButton = (Button) findViewById(R.id.btnInSave);// 获取保存按钮
 		btnInCancelButton = (Button) findViewById(R.id.btnInCancel);// 获取取消按钮
+	
+		
+		new Handler().postDelayed(new Runnable() {
 
+			@Override
+			public void run() {
+				WindowUtils.showPopupWindow(AddInaccount.this);
+
+			}
+		}, 1000 * 1);
+		
+		
 		txtInTime.setOnClickListener(new OnClickListener() {// 为时间文本框设置单击监听事件
 					@Override
 					public void onClick(View arg0) {
@@ -125,5 +137,18 @@ public class AddInaccount extends Activity {
 		// 显示设置的时间
 		txtInTime.setText(new StringBuilder().append(mYear).append("-")
 				.append(mMonth + 1).append("-").append(mDay));
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		new Handler().postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				WindowUtils.showPopupWindow(AddInaccount.this);
+
+			}
+		}, 1000 * 1);
 	}
 }
