@@ -44,14 +44,14 @@ public class AddInaccount extends Activity {
 		btnInCancelButton = (Button) findViewById(R.id.btnInCancel);// 获取取消按钮
 	
 		
-		new Handler().postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				WindowUtils.showPopupWindow(AddInaccount.this);
-
-			}
-		}, 1000 * 1);
+//		new Handler().postDelayed(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				WindowUtils.showPopupWindow(AddInaccount.this);
+//
+//			}
+//		}, 1000 * 1);
 		
 		
 		txtInTime.setOnClickListener(new OnClickListener() {// 为时间文本框设置单击监听事件
@@ -142,13 +142,13 @@ public class AddInaccount extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		new Handler().postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				WindowUtils.showPopupWindow(AddInaccount.this);
-
-			}
-		}, 1000 * 1);
+//		new Handler().postDelayed(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				WindowUtils.showPopupWindow(AddInaccount.this);
+//
+//			}
+//		}, 1000 * 1);
 	}
 }

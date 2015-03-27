@@ -43,14 +43,14 @@ public class AddOutaccount extends Activity {
 		btnSaveButton = (Button) findViewById(R.id.btnSave);// 获取保存按钮
 		btnCancelButton = (Button) findViewById(R.id.btnCancel);// 获取取消按钮
 
-		new Handler().postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				WindowUtils.showPopupWindow(AddOutaccount.this);
-
-			}
-		}, 1000 * 1);
+//		new Handler().postDelayed(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				WindowUtils.showPopupWindow(AddOutaccount.this);
+//
+//			}
+//		}, 1000 * 1);
 		
 		txtTime.setOnClickListener(new OnClickListener() {// 为时间文本框设置单击监听事件
 
@@ -143,13 +143,13 @@ public class AddOutaccount extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		new Handler().postDelayed(new Runnable() {
-
-			@Override
-			public void run() {
-				WindowUtils.showPopupWindow(AddOutaccount.this);
-
-			}
-		}, 1000 * 1);
+//		new Handler().postDelayed(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				WindowUtils.showPopupWindow(AddOutaccount.this);
+//
+//			}
+//		}, 1000 * 1);
 	}
 }

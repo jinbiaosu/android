@@ -10,22 +10,24 @@ import android.view.animation.AnimationSet;
 import android.widget.Button;
 
 import com.vein.accountsoft.activity.R;
+import com.xiaomi.market.sdk.XiaomiUpdateAgent;
 
 public class SplashActivity extends Activity {
 	private Button splash_loginButton;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
 		splash_loginButton = (Button) findViewById(R.id.splash_btn);
-		
-		AnimationSet animationSet=new AnimationSet(true);
-		AlphaAnimation alphaAnimation=new AlphaAnimation(0, 1);
+
+		AnimationSet animationSet = new AnimationSet(true);
+		AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
 		alphaAnimation.setDuration(2000);
 		animationSet.addAnimation(alphaAnimation);
 		splash_loginButton.startAnimation(animationSet);
-
+		XiaomiUpdateAgent.setCheckUpdateOnlyWifi(true);
+		XiaomiUpdateAgent.update(this);
 
 		splash_loginButton.setOnClickListener(new OnClickListener() {
 
