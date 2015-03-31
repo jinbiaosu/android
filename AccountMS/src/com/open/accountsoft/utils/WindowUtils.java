@@ -1,8 +1,4 @@
 package com.open.accountsoft.utils;
-import com.open.accountsoft.activity.CaculatorActivity;
-import com.vein.accountsoft.activity.R;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
@@ -13,12 +9,15 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
+
+import com.open.accountsoft.activity.CaculatorActivity;
+import com.vein.accountsoft.activity.R;
 
 /**
  * 弹窗辅助类

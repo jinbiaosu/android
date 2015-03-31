@@ -1,14 +1,14 @@
 /*Programming by zlzsam*/
 package com.open.accountsoft.activity;
 
-import com.vein.accountsoft.activity.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.vein.accountsoft.activity.R;
 
 public class CaculatorActivity extends Activity {
 

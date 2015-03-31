@@ -3,7 +3,6 @@ package com.open.accountsoft.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -12,62 +11,60 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.open.accountsoft.dao.PwdDAO;
-import com.open.accountsoft.utils.WindowUtils;
 import com.vein.accountsoft.activity.R;
-import com.xiaomi.account.openauth.XiaomiOAuthorize;
 import com.xiaomi.account.openauth.XiaomiOAuthorize.OnOAuthInterface;
-import com.xiaomi.auth.AuthConstants;
 
 public class Login extends Activity implements OnOAuthInterface {
 	EditText txtlogin;// 创建EditText对象
 	TextView milogintv;
 	Button btnlogin, btnclose, miloginbtn;// 创建两个Button对象
 
-	  private static String USER_PROFILE_PATH = "/user/profile";
+	private static String USER_PROFILE_PATH = "/user/profile";
 
-	    private static String USER_RELATION_PATH = "/user/relation";
+	private static String USER_RELATION_PATH = "/user/relation";
 
-	    public static int REQUESTCODE_TOKEN = 10001;
+	public static int REQUESTCODE_TOKEN = 10001;
 
-	    public static int REQUESTCODE_CODE = 10002;
+	public static int REQUESTCODE_CODE = 10002;
 
-	    Button mGetToken;
+	Button mGetToken;
 
-	    Button mGetCode;
+	Button mGetCode;
 
-	    Button mProfile;
+	Button mProfile;
 
-	    Button mRelation;
+	Button mRelation;
 
-	    String userId;
+	String userId;
 
-	    Long clientId = 2882303761517315345L;
+	Long clientId = 2882303761517315345L;
 
-	    String redirectUri = "http://xiaomi.com";
+	String redirectUri = "http://xiaomi.com";
 
-	    String clientSecret = "lR7iYaCjjHxngLlWThiPVQ==";
+	String clientSecret = "lR7iYaCjjHxngLlWThiPVQ==";
 
-	    String code;
+	String code;
 
-	    String state;
+	String state;
 
-	    String tokenType;
+	String tokenType;
 
-	    String macKey;
+	String macKey;
 
-	    String macAlgorithm;
+	String macAlgorithm;
 
-	    String expiresIn;
+	String expiresIn;
 
-	    String scope;
+	String scope;
 
-	    private String accessToken;
+	private String accessToken;
 
-	    String refreshToken;
+	String refreshToken;
 
-	    String error;
+	String error;
 
-	    String errorDescription;
+	String errorDescription;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -78,13 +75,12 @@ public class Login extends Activity implements OnOAuthInterface {
 		btnlogin = (Button) findViewById(R.id.btnLogin);// 获取登录按钮
 		btnclose = (Button) findViewById(R.id.btnClose);// 获取取消按钮
 		miloginbtn = (Button) findViewById(R.id.miauth_log);
-		milogintv=(TextView)findViewById(R.id.miauth_tv);
-		
+		milogintv = (TextView) findViewById(R.id.miauth_tv);
+
 		milogintv.setVisibility(View.GONE);
 		miloginbtn.setVisibility(View.GONE);
-		
 
-//		miloginbtn.setOnClickListener(new MiLonginListener());
+		// miloginbtn.setOnClickListener(new MiLonginListener());
 
 		btnlogin.setOnClickListener(new OnClickListener() {// 为登录按钮设置监听事件
 			@Override
@@ -94,13 +90,18 @@ public class Login extends Activity implements OnOAuthInterface {
 				PwdDAO pwdDAO = new PwdDAO(Login.this);// 创建PwdDAO对象
 				// 判断是否有密码及是否输入了密码
 				if ((pwdDAO.getCount() == 0 || pwdDAO.find().getPassword()
-						.isEmpty())
-						&& txtlogin.getText().toString().isEmpty()) {
-					startActivity(intent);// 启动主Activity
+						.isEmpty())) {
+					if (txtlogin.getText().toString().isEmpty()) {
+						startActivity(intent);// 启动主Activity
+					} else {
+						Toast.makeText(Login.this, "您还没有设置过密码",
+								Toast.LENGTH_SHORT).show();
+					}
+
 				} else {
 					// 判断输入的密码是否与数据库中的密码一致
-					if (pwdDAO.find().getPassword()
-							.equals(txtlogin.getText().toString())) {
+					if ((pwdDAO.find().getPassword()).equals(txtlogin.getText()
+							.toString())) {
 						startActivity(intent);// 启动主Activity
 					} else {
 						// 弹出信息提示
@@ -125,32 +126,34 @@ public class Login extends Activity implements OnOAuthInterface {
 
 		@Override
 		public void onClick(View arg0) {
-//			Bundle options = new Bundle();
-//			options.putString(AuthConstants.EXTRA_SCOPE, String.valueOf(1));
-//
-//			XiaomiOAuthorize.startGetAccessToken(Login.this, clientId,
-//					redirectUri, options, // options
-//					REQUESTCODE_TOKEN);
+			// Bundle options = new Bundle();
+			// options.putString(AuthConstants.EXTRA_SCOPE, String.valueOf(1));
+			//
+			// XiaomiOAuthorize.startGetAccessToken(Login.this, clientId,
+			// redirectUri, options, // options
+			// REQUESTCODE_TOKEN);
 		}
 
 	}
 
 	@Override
 	public void onGetAccessTokenDirectly(Bundle bundle) {
-	       processAuthResult(bundle);
+		processAuthResult(bundle);
 	}
-    private void processAuthResult(Bundle bundle) {
-        accessToken = bundle.getString("access_token");
-        expiresIn = bundle.getString("expires_in");
-        scope = bundle.getString("scope");
-        state = bundle.getString("state");
-        tokenType = bundle.getString("token_type");
-        macKey = bundle.getString("mac_key");
-        macAlgorithm = bundle.getString("mac_algorithm");
-//        mContentView.setText("accessToken=" + accessToken + ",expiresIn=" + expiresIn
-//                + ",scope=" + scope
-//                + ",state=" + state + ",tokenType=" + tokenType + ",macKey=" + macKey
-//                + ",macAlogorithm="
-//                + macAlgorithm);
-    }
+
+	private void processAuthResult(Bundle bundle) {
+		accessToken = bundle.getString("access_token");
+		expiresIn = bundle.getString("expires_in");
+		scope = bundle.getString("scope");
+		state = bundle.getString("state");
+		tokenType = bundle.getString("token_type");
+		macKey = bundle.getString("mac_key");
+		macAlgorithm = bundle.getString("mac_algorithm");
+		// mContentView.setText("accessToken=" + accessToken + ",expiresIn=" +
+		// expiresIn
+		// + ",scope=" + scope
+		// + ",state=" + state + ",tokenType=" + tokenType + ",macKey=" + macKey
+		// + ",macAlogorithm="
+		// + macAlgorithm);
+	}
 }

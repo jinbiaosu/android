@@ -1,9 +1,9 @@
 package com.open.accountsoft.activity;
 
-import com.xiaomi.account.openauth.XiaomiOAuthorize.OnOAuthInterface;
-
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.xiaomi.account.openauth.XiaomiOAuthorize.OnOAuthInterface;
 
 public class MiLoginActivity extends Activity implements OnOAuthInterface {
 

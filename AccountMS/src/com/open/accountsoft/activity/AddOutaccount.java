@@ -139,10 +139,10 @@ public class AddOutaccount extends Activity {
 		txtTime.setText(new StringBuilder().append(mYear).append("-")
 				.append(mMonth + 1).append("-").append(mDay));
 	}
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
+//	@Override
+//	protected void onResume() {
+//		// TODO Auto-generated method stub
+//		super.onResume();
 //		new Handler().postDelayed(new Runnable() {
 //
 //			@Override
@@ -151,5 +151,5 @@ public class AddOutaccount extends Activity {
 //
 //			}
 //		}, 1000 * 1);
-	}
+//	}
 }

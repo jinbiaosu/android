@@ -131,6 +131,7 @@ class pictureAdapter extends BaseAdapter// 创建基于BaseAdapter的子类
 			viewHolder = (ViewHolder) arg1.getTag();// 设置提示
 		}
 		viewHolder.title.setText(pictures.get(arg0).getTitle());// 设置图像标题
+
 		viewHolder.image.setImageResource(pictures.get(arg0).getImageId());// 设置图像的二进制值
 		return arg1;// 返回图像标识
 	}

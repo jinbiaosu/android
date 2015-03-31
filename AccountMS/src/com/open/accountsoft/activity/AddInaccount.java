@@ -14,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.open.accountsoft.dao.InaccountDAO;
 import com.open.accountsoft.model.Tb_inaccount;
 import com.open.accountsoft.utils.WindowUtils;
@@ -43,15 +44,22 @@ public class AddInaccount extends Activity {
 		btnInSaveButton = (Button) findViewById(R.id.btnInSave);// 获取保存按钮
 		btnInCancelButton = (Button) findViewById(R.id.btnInCancel);// 获取取消按钮
 	
-		
-//		new Handler().postDelayed(new Runnable() {
-//
+//		new Thread(new Runnable() {
+//			
 //			@Override
 //			public void run() {
-//				WindowUtils.showPopupWindow(AddInaccount.this);
+//				new Handler().postDelayed(new Runnable() {
 //
+//					@Override
+//					public void run() {
+//						WindowUtils.showPopupWindow(AddInaccount.this);
+//
+//					}
+//				}, 1000 * 1);
+//				
 //			}
-//		}, 1000 * 1);
+//		});
+
 		
 		
 		txtInTime.setOnClickListener(new OnClickListener() {// 为时间文本框设置单击监听事件
@@ -138,10 +146,10 @@ public class AddInaccount extends Activity {
 		txtInTime.setText(new StringBuilder().append(mYear).append("-")
 				.append(mMonth + 1).append("-").append(mDay));
 	}
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
+//	@Override
+//	protected void onResume() {
+//		// TODO Auto-generated method stub
+//		super.onResume();
 //		new Handler().postDelayed(new Runnable() {
 //
 //			@Override
@@ -150,5 +158,5 @@ public class AddInaccount extends Activity {
 //
 //			}
 //		}, 1000 * 1);
-	}
+//	}
 }
