@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -91,6 +92,7 @@ public class Showinfo extends Activity {
 		switch (intType) {// 以intType为条件进行判断
 		case R.id.btnoutinfo:// 如果是btnoutinfo按钮
 			strType = "btnoutinfo";// 为strType变量赋值
+			lvinfo.setBackgroundColor(Color.parseColor("#FF3030"));
 			OutaccountDAO outaccountinfo = new OutaccountDAO(Showinfo.this);// 创建OutaccountDAO对象
 			// 获取所有支出信息，并存储到List泛型集合中
 			List<Tb_outaccount> listoutinfos = outaccountinfo.getScrollData(0,
@@ -108,6 +110,7 @@ public class Showinfo extends Activity {
 			break;
 		case R.id.btnininfo:// 如果是btnininfo按钮
 			strType = "btnininfo";// 为strType变量赋值
+			lvinfo.setBackgroundColor(Color.parseColor("#008B00"));
 			InaccountDAO inaccountinfo = new InaccountDAO(Showinfo.this);// 创建InaccountDAO对象
 			// 获取所有收入信息，并存储到List泛型集合中
 			List<Tb_inaccount> listinfos = inaccountinfo.getScrollData(0,
@@ -125,6 +128,7 @@ public class Showinfo extends Activity {
 			break;
 		case R.id.btnflaginfo:// 如果是btnflaginfo按钮
 			strType = "btnflaginfo";// 为strType变量赋值
+			lvinfo.setBackgroundColor(Color.parseColor("#8C6931"));
 			FlagDAO flaginfo = new FlagDAO(Showinfo.this);// 创建FlagDAO对象
 			// 获取所有便签信息，并存储到List泛型集合中
 			List<Tb_flag> listFlags = flaginfo.getScrollData(0,
