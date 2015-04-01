@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.open.accountsoft.utils.SPUtils;
 import com.vein.accountsoft.activity.R;
 
 public class CaculatorActivity extends Activity {
@@ -19,32 +20,30 @@ public class CaculatorActivity extends Activity {
 	int flag = 0, c = 0;
 	double b = 0.0, g = 0.0, f = 0.0;
 
-	// �����������й淶��
 	public void substr() {
 		int a = str.indexOf(".");
 		int b = str.indexOf("E");
 		String tempstr = str;
 		if (a == -1) {
-			if(str.length()>12)
-			str = str.substring(0, 12);
+			if (str.length() > 12)
+				str = str.substring(0, 12);
 		}
 		if (a > 0) {
 			if (b == -1) {
-				if(str.length()>12)
-				str = str.substring(0, 12);
+				if (str.length() > 12)
+					str = str.substring(0, 12);
 			}
 			if (b > 0) {
 				tempstr = str.substring(b);
 				if (str.length() > 12) {
 					int perStrLen = 12 - tempstr.length();
 					str = str.substring(0, perStrLen) + tempstr;
-				} 
+				}
 			}
 		}
 
 	}
 
-	// ���㷽��
 	public double calc() {
 		switch (c) {
 		case 0:
@@ -75,11 +74,9 @@ public class CaculatorActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.calculator);
 
-		// ��ȡ���а���浽���鵱��ȥ
 		final Button number[] = new Button[10];
 		final Button mark[] = new Button[13];
 
-		// ��ȡ���ܰ�ť
 		mark[0] = (Button) findViewById(R.id.markone);
 		mark[1] = (Button) findViewById(R.id.marktwo);
 		mark[2] = (Button) findViewById(R.id.markthree);
@@ -110,7 +107,8 @@ public class CaculatorActivity extends Activity {
 		primaryET = (EditText) findViewById(R.id.edittext2_show);
 
 		/*
-		 * // ��ȡ����ʾ�� secondaryET = (EditText) findViewById(R.id.edittext1_show);
+		 * // ��ȡ����ʾ�� secondaryET = (EditText)
+		 * findViewById(R.id.edittext1_show);
 		 */
 
 		primaryET.setText(str);
@@ -180,17 +178,16 @@ public class CaculatorActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				if (str != "") {
-					if(str.length()==1){
-						str="";
+					if (str.length() == 1) {
+						str = "";
 						primaryET.setText(str);
-					}
-					else{
+					} else {
 						str = str.substring(0, str.length() - 1);
 						primaryET.setText(str);
 					}
-					
+
 				}
-			 
+
 				else {
 					primaryET.setText(str);
 				}
@@ -353,7 +350,6 @@ public class CaculatorActivity extends Activity {
 			}
 		});
 
-		// �ԵȺŵ��¼��Ĵ���
 		mark[12].setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -557,4 +553,16 @@ public class CaculatorActivity extends Activity {
 		return true;
 	}
 
+	@Override
+	protected void onStop() {
+		super.onStop();
+		SPUtils.put(this, "CaculatorReturn", str);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		str = (String) SPUtils.get(this, "CaculatorReturn"," ");
+		primaryET.setText(str);
+	}
 }

@@ -117,10 +117,8 @@ public class WindowUtils {
                 Log.i(LOG_TAG, "ok on click");
                 // 打开安装包
                 // 隐藏弹窗
-//                WindowUtils.hidePopupWindow();
                 Intent intent=new Intent(context, CaculatorActivity.class);
                 context.startActivity(intent);
-                WindowUtils.hidePopupWindow();
             }
         });
 
@@ -151,7 +149,7 @@ public class WindowUtils {
                 Rect rect = new Rect();
                 popupWindowView.getGlobalVisibleRect(rect);
                 if (!rect.contains(x, y)) {
-//                    WindowUtils.hidePopupWindow();
+                    WindowUtils.hidePopupWindow();
                 }
 
                 Log.i(LOG_TAG, "onTouch : " + x + ", " + y + ", rect: "

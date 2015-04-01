@@ -146,6 +146,12 @@
             android:padding="10dp" >
 
             <Button
+                android:id="@+id/caculator_out"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="计算器" />
+
+            <Button
                 android:id="@+id/btnCancel"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"

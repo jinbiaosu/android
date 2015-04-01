@@ -5,6 +5,7 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -26,14 +27,14 @@ public class AddInaccount extends Activity {
 	Spinner spInType;// 创建Spinner对象
 	Button btnInSaveButton;// 创建Button对象“保存”
 	Button btnInCancelButton;// 创建Button对象“取消”
-
+	Button caculator_inButton;
 	private int mYear;// 年
 	private int mMonth;// 月
 	private int mDay;// 日
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.addinaccount);// 设置布局文件
 		txtInMoney = (EditText) findViewById(R.id.txtInMoney);// 获取金额文本框
@@ -43,25 +44,23 @@ public class AddInaccount extends Activity {
 		spInType = (Spinner) findViewById(R.id.spInType);// 获取类别下拉列表
 		btnInSaveButton = (Button) findViewById(R.id.btnInSave);// 获取保存按钮
 		btnInCancelButton = (Button) findViewById(R.id.btnInCancel);// 获取取消按钮
-	
-//		new Thread(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				new Handler().postDelayed(new Runnable() {
-//
-//					@Override
-//					public void run() {
-//						WindowUtils.showPopupWindow(AddInaccount.this);
-//
-//					}
-//				}, 1000 * 1);
-//				
-//			}
-//		});
+		caculator_inButton = (Button) findViewById(R.id.caculator_in);
 
-		
-		
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				new Handler().postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						WindowUtils.showPopupWindow(AddInaccount.this);
+					}
+				}, 1000);
+
+			}
+		});
+
 		txtInTime.setOnClickListener(new OnClickListener() {// 为时间文本框设置单击监听事件
 					@Override
 					public void onClick(View arg0) {
@@ -111,6 +110,15 @@ public class AddInaccount extends Activity {
 						spInType.setSelection(0);// 设置类别下拉列表默认选择第一项
 					}
 				});
+		caculator_inButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(AddInaccount.this,
+						CaculatorActivity.class);
+				startActivity(intent);
+			}
+		});
 
 		final Calendar c = Calendar.getInstance();// 获取当前系统日期
 		mYear = c.get(Calendar.YEAR);// 获取年份
@@ -146,17 +154,17 @@ public class AddInaccount extends Activity {
 		txtInTime.setText(new StringBuilder().append(mYear).append("-")
 				.append(mMonth + 1).append("-").append(mDay));
 	}
-//	@Override
-//	protected void onResume() {
-//		// TODO Auto-generated method stub
-//		super.onResume();
-//		new Handler().postDelayed(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				WindowUtils.showPopupWindow(AddInaccount.this);
-//
-//			}
-//		}, 1000 * 1);
-//	}
+	// @Override
+	// protected void onResume() {
+	// // TODO Auto-generated method stub
+	// super.onResume();
+	// new Handler().postDelayed(new Runnable() {
+	//
+	// @Override
+	// public void run() {
+	// WindowUtils.showPopupWindow(AddInaccount.this);
+	//
+	// }
+	// }, 1000 * 1);
+	// }
 }

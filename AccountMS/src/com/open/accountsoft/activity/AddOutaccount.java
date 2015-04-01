@@ -5,6 +5,7 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -26,7 +27,7 @@ public class AddOutaccount extends Activity {
 	Spinner spType;// 创建Spinner对象
 	Button btnSaveButton;// 创建Button对象“保存”
 	Button btnCancelButton;// 创建Button对象“取消”
-
+	Button caculator_out;
 	private int mYear;// 年
 	private int mMonth;// 月
 	private int mDay;// 日
@@ -42,16 +43,17 @@ public class AddOutaccount extends Activity {
 		spType = (Spinner) findViewById(R.id.spType);// 获取类别下拉列表
 		btnSaveButton = (Button) findViewById(R.id.btnSave);// 获取保存按钮
 		btnCancelButton = (Button) findViewById(R.id.btnCancel);// 获取取消按钮
+		caculator_out = (Button) findViewById(R.id.caculator_out);
 
-//		new Handler().postDelayed(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				WindowUtils.showPopupWindow(AddOutaccount.this);
-//
-//			}
-//		}, 1000 * 1);
-		
+		// new Handler().postDelayed(new Runnable() {
+		//
+		// @Override
+		// public void run() {
+		// WindowUtils.showPopupWindow(AddOutaccount.this);
+		//
+		// }
+		// }, 1000 * 1);
+
 		txtTime.setOnClickListener(new OnClickListener() {// 为时间文本框设置单击监听事件
 
 			@Override
@@ -104,6 +106,16 @@ public class AddOutaccount extends Activity {
 						spType.setSelection(0);// 设置类别下拉列表默认选择第一项
 					}
 				});
+		caculator_out.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(AddOutaccount.this,
+						CaculatorActivity.class);
+				startActivity(intent);
+
+			}
+		});
 
 		final Calendar c = Calendar.getInstance();// 获取当前系统日期
 		mYear = c.get(Calendar.YEAR);// 获取年份
@@ -139,17 +151,17 @@ public class AddOutaccount extends Activity {
 		txtTime.setText(new StringBuilder().append(mYear).append("-")
 				.append(mMonth + 1).append("-").append(mDay));
 	}
-//	@Override
-//	protected void onResume() {
-//		// TODO Auto-generated method stub
-//		super.onResume();
-//		new Handler().postDelayed(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				WindowUtils.showPopupWindow(AddOutaccount.this);
-//
-//			}
-//		}, 1000 * 1);
-//	}
+	// @Override
+	// protected void onResume() {
+	// // TODO Auto-generated method stub
+	// super.onResume();
+	// new Handler().postDelayed(new Runnable() {
+	//
+	// @Override
+	// public void run() {
+	// WindowUtils.showPopupWindow(AddOutaccount.this);
+	//
+	// }
+	// }, 1000 * 1);
+	// }
 }
