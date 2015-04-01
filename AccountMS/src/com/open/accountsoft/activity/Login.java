@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.open.accountsoft.dao.PwdDAO;
+import com.open.accountsoft.utils.AccountConstant;
 import com.vein.accountsoft.activity.R;
 import com.xiaomi.account.openauth.XiaomiOAuthorize.OnOAuthInterface;
 
@@ -19,13 +20,13 @@ public class Login extends Activity implements OnOAuthInterface {
 	TextView milogintv;
 	Button btnlogin, btnclose, miloginbtn;// 创建两个Button对象
 
-	private static String USER_PROFILE_PATH = "/user/profile";
+	private static String USER_PROFILE_PATH = AccountConstant.USER_PROFILE_PATH;
 
-	private static String USER_RELATION_PATH = "/user/relation";
+	private static String USER_RELATION_PATH = AccountConstant.USER_RELATION_PATH;
 
-	public static int REQUESTCODE_TOKEN = 10001;
+	public static int REQUESTCODE_TOKEN = AccountConstant.REQUESTCODE_TOKEN;
 
-	public static int REQUESTCODE_CODE = 10002;
+	public static int REQUESTCODE_CODE = AccountConstant.REQUESTCODE_CODE;
 
 	Button mGetToken;
 
@@ -37,11 +38,11 @@ public class Login extends Activity implements OnOAuthInterface {
 
 	String userId;
 
-	Long clientId = 2882303761517315345L;
+	Long clientId = AccountConstant.CLIENT_ID;
 
-	String redirectUri = "http://xiaomi.com";
+	String redirectUri = AccountConstant.REDIRECT_URL;
 
-	String clientSecret = "lR7iYaCjjHxngLlWThiPVQ==";
+	String clientSecret = AccountConstant.APP_SECRET;
 
 	String code;
 
@@ -67,7 +68,6 @@ public class Login extends Activity implements OnOAuthInterface {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);// 设置布局文件
 

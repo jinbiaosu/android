@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.open.accountsoft.utils.SPUtils;
 import com.vein.accountsoft.activity.R;
 import com.xiaomi.market.sdk.XiaomiUpdateAgent;
+import com.xiaomi.mistatistic.sdk.MiStatInterface;
 
 public class SplashActivity extends Activity {
 	private Button splash_loginButton;
@@ -21,12 +22,13 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splash);
 		splash_loginButton = (Button) findViewById(R.id.splash_btn);
-
+		// login button
 		AnimationSet animationSet = new AnimationSet(true);
 		AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
 		alphaAnimation.setDuration(2000);
 		animationSet.addAnimation(alphaAnimation);
 		splash_loginButton.startAnimation(animationSet);
+		// MI update
 		XiaomiUpdateAgent.setCheckUpdateOnlyWifi(true);
 		XiaomiUpdateAgent.update(this);
 
@@ -44,8 +46,19 @@ public class SplashActivity extends Activity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-//		SPUtils.remove(this, "CaculatorReturn");
-		SPUtils.put(this, "CaculatorReturn","0");
+		// SPUtils.remove(this, "CaculatorReturn");
+		SPUtils.put(this, "CaculatorReturn", "0");
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MiStatInterface.recordPageStart(SplashActivity.this, "主界面");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MiStatInterface.recordPageEnd();
+	}
 }
