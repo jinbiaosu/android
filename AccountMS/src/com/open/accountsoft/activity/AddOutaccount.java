@@ -7,7 +7,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,7 +17,6 @@ import android.widget.Toast;
 
 import com.open.accountsoft.dao.OutaccountDAO;
 import com.open.accountsoft.model.Tb_outaccount;
-import com.open.accountsoft.utils.WindowUtils;
 import com.vein.accountsoft.activity.R;
 
 public class AddOutaccount extends Activity {
