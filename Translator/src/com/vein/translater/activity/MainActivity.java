@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 
 import com.vein.translater.R;
 import com.vein.translater.fragment.TranslateFragment;
+import com.xiaomi.market.sdk.XiaomiUpdateAgent;
+import com.xiaomi.mistatistic.sdk.MiStatInterface;
 
 public class MainActivity extends Activity implements OnClickListener {
 	private MainTab02 mTab02;
@@ -30,6 +32,10 @@ public class MainActivity extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		// MI update
+		XiaomiUpdateAgent.setCheckUpdateOnlyWifi(true);
+		XiaomiUpdateAgent.update(this);
+		
 		initViews();
 		fragmentManager = getFragmentManager();
 		setTabSelection(0);
@@ -177,5 +183,15 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 		
 	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MiStatInterface.recordPageStart(MainActivity.this, "主界面");
+	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MiStatInterface.recordPageEnd();
+	}
 }

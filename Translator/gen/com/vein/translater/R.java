@@ -40,7 +40,7 @@ public final class R {
         public static final int translate=0x7f02000d;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000f;
+        public static final int action_settings=0x7f090010;
         public static final int btn_tab_bottom_contact=0x7f090009;
         public static final int btn_tab_bottom_friend=0x7f090007;
         public static final int btn_tab_bottom_setting=0x7f090005;
@@ -54,6 +54,7 @@ public final class R {
         public static final int langue_translate=0x7f09000c;
         public static final int ly_main_tab_bottom=0x7f090001;
         public static final int ly_main_weixin=0x7f09000a;
+        public static final int trabslate_dic_result=0x7f09000f;
         public static final int trabslate_result=0x7f09000e;
         public static final int translate_content=0x7f09000d;
     }

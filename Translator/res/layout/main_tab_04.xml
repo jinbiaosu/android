@@ -13,9 +13,9 @@
    	    android:layout_height="0dp"
    	    android:layout_weight="1"
    	    android:gravity="center"
-   	    android:text="本页为设备界面"
+   	    android:text="******翻译小助手******\n      作者:GoldenVein\n  欢迎使用，本小工具简单已用，如果有额外需求，请联系736703702@qq.com,谢谢支持！"
    	    android:textColor="#000000"
-   	    android:textSize="30sp"
+   	    android:textSize="25sp"
    	    />
 
     
