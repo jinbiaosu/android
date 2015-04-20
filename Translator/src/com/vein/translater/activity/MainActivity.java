@@ -12,17 +12,18 @@ import android.widget.LinearLayout;
 
 import com.vein.translater.R;
 import com.vein.translater.fragment.TranslateFragment;
+import com.vein.translater.fragment.TranslateHistoryFranment;
 import com.xiaomi.market.sdk.XiaomiUpdateAgent;
 import com.xiaomi.mistatistic.sdk.MiStatInterface;
 
 public class MainActivity extends Activity implements OnClickListener {
-	private MainTab02 mTab02;
 	private TranslateFragment mTab01;
+	private TranslateHistoryFranment mTab02;
 	private MainTab03 mTab03;
 	private MainTab04 mTab04;
 
 	private LinearLayout mTabBtnWeixin;
-//	private LinearLayout mTabBtnFrd;
+	private LinearLayout mTabBtnFrd;
 //	private LinearLayout mTabBtnAddress;
 	private LinearLayout mTabBtnSettings;
 
@@ -44,12 +45,12 @@ public class MainActivity extends Activity implements OnClickListener {
 	{
 
 		mTabBtnWeixin = (LinearLayout) findViewById(R.id.id_tab_bottom_weixin);
-//		mTabBtnFrd = (LinearLayout) findViewById(R.id.id_tab_bottom_friend);
+		mTabBtnFrd = (LinearLayout) findViewById(R.id.id_tab_bottom_friend);
 //		mTabBtnAddress = (LinearLayout) findViewById(R.id.id_tab_bottom_contact);
 		mTabBtnSettings = (LinearLayout) findViewById(R.id.id_tab_bottom_setting);
 
 		mTabBtnWeixin.setOnClickListener(this);
-//		mTabBtnFrd.setOnClickListener(this);
+		mTabBtnFrd.setOnClickListener(this);
 //		mTabBtnAddress.setOnClickListener(this);
 		mTabBtnSettings.setOnClickListener(this);
 	}
@@ -61,14 +62,14 @@ public class MainActivity extends Activity implements OnClickListener {
 		case R.id.id_tab_bottom_weixin:
 			setTabSelection(0);
 			break;
-//		case R.id.id_tab_bottom_friend:
-//			setTabSelection(1);
-//			break;
+		case R.id.id_tab_bottom_friend:
+			setTabSelection(1);
+			break;
 //		case R.id.id_tab_bottom_contact:
 //			setTabSelection(2);
 //			break;
 		case R.id.id_tab_bottom_setting:
-			setTabSelection(1);
+			setTabSelection(2);
 			break;
 
 		default:
@@ -101,21 +102,21 @@ public class MainActivity extends Activity implements OnClickListener {
 				transaction.show(mTab01);
 			}
 			break;
-//		case 1:
-//
-//			((ImageButton) mTabBtnFrd.findViewById(R.id.btn_tab_bottom_friend))
-//					.setImageResource(R.drawable.tab_find_frd_pressed);
-//			if (mTab02 == null)
-//			{
-//
-//				mTab02 = new MainTab02();
-//				transaction.add(R.id.id_content, mTab02);
-//			} else
-//			{
-//
-//				transaction.show(mTab02);
-//			}
-//			break;
+		case 1:
+
+			((ImageButton) mTabBtnFrd.findViewById(R.id.btn_tab_bottom_friend))
+					.setImageResource(R.drawable.tab_find_frd_pressed);
+			if (mTab02 == null)
+			{
+
+				mTab02 = new TranslateHistoryFranment();
+				transaction.add(R.id.id_content, mTab02);
+			} else
+			{
+
+				transaction.show(mTab02);
+			}
+			break;
 //		case 2:
 //
 //			((ImageButton) mTabBtnAddress.findViewById(R.id.btn_tab_bottom_contact))
@@ -131,7 +132,7 @@ public class MainActivity extends Activity implements OnClickListener {
 //				transaction.show(mTab03);
 //			}
 //			break;
-		case 1:
+		case 2:
 	
 			((ImageButton) mTabBtnSettings.findViewById(R.id.btn_tab_bottom_setting))
 					.setImageResource(R.drawable.tab_settings_pressed);
@@ -153,8 +154,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	{
 		((ImageButton) mTabBtnWeixin.findViewById(R.id.btn_tab_bottom_weixin))
 				.setImageResource(R.drawable.tab_weixin_normal);
-//		((ImageButton) mTabBtnFrd.findViewById(R.id.btn_tab_bottom_friend))
-//				.setImageResource(R.drawable.tab_find_frd_normal);
+		((ImageButton) mTabBtnFrd.findViewById(R.id.btn_tab_bottom_friend))
+				.setImageResource(R.drawable.tab_find_frd_normal);
 //		((ImageButton) mTabBtnAddress.findViewById(R.id.btn_tab_bottom_contact))
 //				.setImageResource(R.drawable.tab_address_normal);
 		((ImageButton) mTabBtnSettings.findViewById(R.id.btn_tab_bottom_setting))

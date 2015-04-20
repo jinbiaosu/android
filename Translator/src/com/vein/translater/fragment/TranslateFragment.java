@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
@@ -26,6 +25,8 @@ import com.baidu.baidutranslate.openapi.entity.DictResult;
 import com.baidu.baidutranslate.openapi.entity.Language;
 import com.baidu.baidutranslate.openapi.entity.TransResult;
 import com.vein.translater.R;
+import com.vein.translater.db.TranslateDAO;
+import com.vein.translater.db.model.TB_Translate;
 import com.vein.translater.utils.BooleanUtils;
 import com.vein.translater.utils.JsonDataUtils;
 import com.vein.translater.utils.LangueUtils;
@@ -75,50 +76,50 @@ public class TranslateFragment extends Fragment {
 				long arg3) {
 			switch (arg2) {
 			case 0:
-//				Toast.makeText(getActivity(), "自动检测语言", Toast.LENGTH_SHORT)
-//						.show();
+				// Toast.makeText(getActivity(), "自动检测语言", Toast.LENGTH_SHORT)
+				// .show();
 				trabslate_result.setText("译文：" + "\n");
 				trabslate_dic_result.setText("词典：" + "\n");
 				translateType = 0;
 				break;
 			case 1:
-//				Toast.makeText(getActivity(), "英文->中文", Toast.LENGTH_SHORT)
-//						.show();
+				// Toast.makeText(getActivity(), "英文->中文", Toast.LENGTH_SHORT)
+				// .show();
 				trabslate_result.setText("译文：" + "\n");
 				trabslate_dic_result.setText("词典：" + "\n");
 				translateType = 1;
 				break;
 			case 2:
-//				Toast.makeText(getActivity(), "中文->英文", Toast.LENGTH_SHORT)
-//						.show();
+				// Toast.makeText(getActivity(), "中文->英文", Toast.LENGTH_SHORT)
+				// .show();
 				trabslate_result.setText("译文：" + "\n");
 				trabslate_dic_result.setText("词典：" + "\n");
 				translateType = 2;
 				break;
 			case 3:
-//				Toast.makeText(getActivity(), "日语->中文", Toast.LENGTH_SHORT)
-//						.show();
+				// Toast.makeText(getActivity(), "日语->中文", Toast.LENGTH_SHORT)
+				// .show();
 				trabslate_result.setText("译文：" + "\n");
 				trabslate_dic_result.setText("词典：" + "\n");
 				translateType = 3;
 				break;
 			case 4:
-//				Toast.makeText(getActivity(), "中文->日语", Toast.LENGTH_SHORT)
-//						.show();
+				// Toast.makeText(getActivity(), "中文->日语", Toast.LENGTH_SHORT)
+				// .show();
 				trabslate_result.setText("译文：" + "\n");
 				trabslate_dic_result.setText("词典：" + "\n");
 				translateType = 4;
 				break;
 			case 5:
-//				Toast.makeText(getActivity(), "韩文->中文", Toast.LENGTH_SHORT)
-//						.show();
+				// Toast.makeText(getActivity(), "韩文->中文", Toast.LENGTH_SHORT)
+				// .show();
 				trabslate_result.setText("译文：" + "\n");
 				trabslate_dic_result.setText("词典：" + "\n");
 				translateType = 5;
 				break;
 			case 6:
-//				Toast.makeText(getActivity(), "中文->韩文", Toast.LENGTH_SHORT)
-//						.show();
+				// Toast.makeText(getActivity(), "中文->韩文", Toast.LENGTH_SHORT)
+				// .show();
 				trabslate_result.setText("译文：" + "\n");
 				trabslate_dic_result.setText("词典：" + "\n");
 				translateType = 6;
@@ -140,9 +141,11 @@ public class TranslateFragment extends Fragment {
 		public void onClick(View v) {
 			if (BooleanUtils.isnetWorkAvilable(getActivity())) {
 				trabslate_result.setVisibility(View.VISIBLE);
-				if(translate_content.getText().toString().trim().contains(" ")||(translate_content.getText().toString().trim().length()>10)){
+				if (translate_content.getText().toString().trim().contains(" ")
+						|| (translate_content.getText().toString().trim()
+								.length() > 10)) {
 					trabslate_dic_result.setVisibility(View.GONE);
-				}else {
+				} else {
 					trabslate_dic_result.setVisibility(View.VISIBLE);
 				}
 				switch (translateType) {
@@ -159,7 +162,9 @@ public class TranslateFragment extends Fragment {
 
 									@Override
 									public void onResult(TransResult result) {
-
+										TB_Translate tb_Translate=new TB_Translate();
+										tb_Translate.setInput(translate_content.getText().toString());
+										
 										JSONObject mJsonObject = JSONArray
 												.parseObject(result
 														.toJSONString());
@@ -169,6 +174,8 @@ public class TranslateFragment extends Fragment {
 												+ result_dest);
 										System.out.println("trans_result:"
 												+ result_dest);
+										tb_Translate.setTresult(result_dest);
+										new TranslateDAO(getActivity()).add(tb_Translate);
 									}
 								});
 						client.dict(translate_content.getText().toString(),
