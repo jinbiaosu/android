@@ -1,0 +1,343 @@
+<project
+    name="Baidu_Cloud_IMSDK"
+	default="build-all"
+    basedir=".">
+	
+	<tstamp>
+        <format
+            locale="cn"
+            pattern="yyyyMMddHHmmss"
+            property="TODAY" />
+    </tstamp>
+    <property name="product" value="Baidu_Cloud_IMSDK" />
+    <property name="version" value="1.1.0" />
+    <property name="src.dir" value="${basedir}/src" />
+    <property name="build.dir" value="${basedir}/bin/classes" />
+    <property name="lib.dir" value="${basedir}/output" />
+	<property name="doc.dir" value="${basedir}/output/doc"/>
+    <property name="jar.file" value="${product}-${version}.jar" />
+    <property name="output.file" value="temp-${version}-${TODAY}.jar" />
+    <property name="output-full.file" value="${product}_${version}_${TODAY}.jar" />
+	<property name="zip.name" value="${lib.dir}/${product}-${version}-${TODAY}.zip" />
+	<property name="demo.dir" value="${basedir}/IMDemo"/>
+	 
+	
+    <property environment="env" />
+
+    <condition
+        else="${env.ANDROID_SDK_HOME}"
+        property="sdk-folder"
+        value="/opt/adt-bundle-linux-x86-20140702/sdk" >
+        <not>
+            <isset property="env.ANDROID_SDK_HOME" />
+        </not>
+    </condition>
+	
+	<!--Proguard-home -->
+    <property name="proguard-home" value="${sdk-folder}/tools/proguard/lib"/>
+	<!--金彪和阳阳目录不一样sdk-platform-folder-->
+	<condition
+        else="${sdk-folder}/platforms/android-20"
+        property="sdk-platform-folder"
+        value="${sdk-folder}/platforms/android-19" >
+        <available resource="${sdk-folder}/platforms/android-19">
+        </available>
+    </condition>
+	<!--金彪和阳阳目录不一样sdk-platform-tools-->
+	<condition
+        else="${sdk-folder}/build-tools/android-4.4W"
+        property="sdk-platform-tools"
+        value="${sdk-folder}/build-tools/19.0.0" >
+        <available resource="${sdk-folder}/build-tools/19.0.0">
+        </available>
+    </condition>
+	
+    <property
+        name="android-jar"
+        value="${sdk-platform-folder}/android.jar" />
+
+    <condition
+        else="${env.PROGUARD_HOME}"
+        property="proguard-home"
+        value="${sdk-folder}/tools/proguard" >
+        <not>
+            <isset property="env.PROGUARD_HOME" />
+        </not>
+    </condition>
+
+   <!--打包需要的基本工具类-->
+	<property name="aidl" value="${sdk-platform-tools}/aidl.exe" />
+	<property name="framework-aidl" value="${sdk-platform-folder}/framework.aidl" />
+	<property name="aapt" value="${sdk-platform-tools}/aapt" />
+	<property name="dx" value="${sdk-platform-tools}/dx" />
+	<property name="apkbuilder" value="${sdk-platform-tools}/apkbuilder" />
+	<property name="jarsigner" value="${env.JAVA_HOME}/bin/jarsigner" />
+    <property name="external-libs" value="libs" />
+
+    <path id="classpath" >
+        <fileset dir="${external-libs}" >
+            <include name="**/*.jar" />
+        </fileset>
+    </path>
+
+	<echo message="---------------------------------------"/>  
+    <echo message="ANDROID_SDK_HOME = ${env.ANDROID_SDK_HOME}"/>  
+    <echo message="ant.home = ${env.ANT_HOME}"/>  
+    <echo message="ant.java.version = ${ant.java.version}"/>  
+    <echo message="ant.project.name = ${ant.project.name}"/>  
+    <echo message="Baidu Cloud IMSDK Version = ${version}_${TODAY}"/>  
+    
+	
+    <target name="clean" >
+        <echo>clean build dir</echo>
+        <delete
+            dir="${build.dir}"
+            quiet="true" />
+		<delete
+			dir="${doc.dir}"
+			quiet="true"/>
+        <delete
+            file="${lib.dir}/${jar.file}"
+            quiet="true" />
+        <delete
+            dir="${lib.dir}"
+            quiet="true" />
+    </target>
+
+    <target
+        name="init"
+        depends="clean" >
+        <mkdir dir="${build.dir}" />
+        <mkdir dir="${lib.dir}" />
+		<mkdir dir="${doc.dir}" />
+        <mkdir dir="${external-libs}" />
+    </target>
+
+    <target
+        name="compile"
+        depends="init" >
+        <echo>compile JAVA source</echo>
+        <javac
+            bootclasspath="${android-jar}"
+            destdir="${build.dir}"
+            encoding="UTF-8"
+            debug="true"
+            srcdir="${src.dir}" >
+            <include name="**/*.java" />
+            <classpath refid="classpath" />
+        </javac>
+    </target>
+
+    <target
+        name="jar"
+        depends="compile" >
+        <jar destfile="${lib.dir}/${output.file}" >
+            <fileset dir="${build.dir}" >
+                <include name="**/*.class" />
+				<exclude name="**/friend/*.class"/> 
+				<exclude name="**/friend/**/*.class"/> 
+				<exclude name="**/group/*.class"/> 
+				<exclude name="**/group/**/*.class"/> 
+            </fileset>
+        </jar>
+    </target>
+
+    <target
+        name="proguard-jar"
+        depends="jar" >
+        <echo>proguard...</echo>
+		<!--混淆 jar包-->
+		<java jar="${proguard-home}/proguard.jar" fork="true" failonerror="true">  
+			<jvmarg value="-Dmaximum.inlined.code.length=32"/>  
+			<arg value="-injars ${lib.dir}/${output.file}"/>  
+			<arg value="-outjars ${lib.dir}/${jar.file}"/>  
+			<arg value="-libraryjars ${android-jar}"/>
+			<arg value="-libraryjars ${external-libs}"/>	
+			<arg value="-dontpreverify"/>  
+			<arg value="-dontoptimize"/>
+
+			<arg value="-repackageclasses 'com/baidu/android/imsdk'"/> 
+			<arg value="-allowaccessmodification"/>
+			<arg value="-keepattributes Exceptions,*Annotation*,InnerClasses,SourceFile,LineNumberTable,Deprecated,Signature"/>
+			<arg value="-keep public class * { public protected *; }"/>
+			<arg value="-keep public final class * { public *; }"/>
+			<arg value="-keep public class ChatMsg { *; }"/>
+			<arg value="-keep public enum * { public *; }"/>
+			<arg value="-optimizationpasses 7"/>
+			<arg value="-verbose"/>  
+			<arg value="-dontskipnonpubliclibraryclasses"/>  
+			<arg value="-dontskipnonpubliclibraryclassmembers"/>  
+		</java>
+		<delete file="${lib.dir}/${output.file}"/>
+		<copy todir="${demo.dir}/libs" file ="${lib.dir}/${jar.file}" />
+		<copy todir="${demo.dir}/libs">
+			<fileset dir="${basedir}/libs/">
+                <include name="*.jar" />
+            </fileset>
+		</copy>
+    </target>
+	<!-- 生成java doc-->
+    <target name="javadoc" depends="init">
+        <javadoc destdir="${doc.dir}" access="public" source="1.6" use="true" notree="false" nonavbar="false" noindex="false" splitindex="true" author="false" version="true" nodeprecatedlist="false" nodeprecated="false" windowtitle="Baidu IMSDK API" encoding="UTF8" docencoding="UTF8" charset="UTF-8">
+            <fileset dir="${src.dir}" defaultexcludes="yes">
+                <include name="**/IMBoxManager.java" />
+				<include name="**/ChatMsg.java" />
+				<include name="**/ILoginListener.java" />
+				<include name="**/ISubscribePaListener.java" />
+				<include name="**/IQuerySubscribedPaListListener.java" />
+				<include name="**/IIsSubscribedListener.java" />
+				<include name="**/IAcceptPaPushListener.java" />
+				<include name="**/IFetchMessageListener.java" />
+				<include name="**/IMessageReceiveListener.java" />
+				<include name="**/IGetPaInfoListener.java" />
+				<include name="**/IPaSubscriptionChangeListener.java" />
+				<include name="**/IOnRegisterNotifyListener.java" />
+            </fileset>
+            <classpath>
+                <pathelement path="${android-jar}" />
+            </classpath>
+            <doctitle>Baidu Cloud IMSDK API</doctitle>
+            <bottom>Copyright (C) 1999-2015 Baidu, Inc. All Rights Reserved.
+            </bottom>
+        </javadoc>
+        <echo message="*** Create java doc done ***"/>
+    </target>
+	
+	<!--对demo编译生成apk文件-->
+	
+	
+    <!-- 生成R文件的相对目录 -->
+	
+	<property name="outdir-gen" value="${basedir}/IMDemo/gen" />
+	<!-- 编译后的文件放置目录 -->
+	<property name="outdir-bin" value="${basedir}/IMDemo/output" />
+	<!-- 经过aapt生成的资源包文件 -->
+	<property name="resources-package" value="${outdir-bin}/resources.ap_" />
+	<!--sdklib.jar-->
+	<property name="jarfile" value="${env.ANDROID_SDK_HOME}/tools/lib/sdklib.jar" />
+	<!-- 证书文件 -->
+	<property name="keystore-file" value="${basedir}/debug.keystore" />
+	<!-- 未认证apk包 -->
+	<property name="out-unsigned-package-ospath" value="${outdir-bin}/${product}-${version}-unsigned.apk" />
+	<!-- 已认证apk包 -->
+	<property name="out-signed-package-ospath" value="${outdir-bin}/${product}-${version}.apk" />
+	
+	<!-- 根据工程中的资源文件生成R.java文件 -->
+	<target name="demo-gen-R" depends="proguard-jar">
+		<echo>Initializing all output directories...</echo>
+		<delete dir="${outdir-bin}" />
+		<mkdir dir="${outdir-bin}" />
+		<delete dir="${outdir-gen}" />
+		<mkdir dir="${outdir-gen}" />
+		<mkdir dir="${outdir-bin}" />
+		<echo>Generating R.java from the resources...</echo>
+		<exec executable="${aapt}" failonerror="true">
+			<arg value="package" />
+			<arg value="-m" />
+			<arg value="--auto-add-overlay" />
+			<arg value="-J" />
+			<arg value="${outdir-gen}" />
+			<arg value="-M" />
+			<arg value="${demo.dir}/AndroidManifest.xml" />
+			<arg value="-S" />
+			<arg value="${demo.dir}/res" />
+			<arg value="-A" />
+			<arg value="${demo.dir}/assets" />
+			<arg value="-I" />
+			<arg value="${android-jar}" />
+		</exec>
+	</target>
+	
+	<target name="demo-compile" depends="demo-gen-R">
+		<echo>Compiling java source code...</echo>
+		<javac encoding="utf-8" target="1.6" destdir="${outdir-bin}" bootclasspath="${android-jar}"  includeantruntime="true">
+			<src path="${outdir-gen}" />
+			<src path="${demo.dir}/src" />
+			<compilerarg value="-Xlint:deprecation" />
+			<classpath>
+				<fileset dir="${demo.dir}/libs" includes="*.jar" />
+			</classpath>
+		</javac>
+	</target>
+	<!-- 将.class文件转化成.dex文件 -->
+	<target name="demo-dex" depends="demo-compile">
+		<echo>Converting compiled files and external libraries into a .dex
+			file...
+		</echo>
+		<exec executable="${dx}" failonerror="true">
+			<arg value="--dex" />
+			<!-- 输出文件 -->
+			<arg value="--output=${outdir-bin}/classes.dex" />
+			<!-- 要生成.dex文件的源classes和libraries -->
+			<arg path="${outdir-bin}" />
+			<arg path="${demo.dir}/libs"/>
+		</exec>
+	</target>
+	<target name="package-res-and-assets" depends="demo-dex">
+		<echo>Packaging resources and assets...</echo>
+		<exec executable="${aapt}" failonerror="true">
+			<arg value="package" />
+			<arg value="-f" />
+			<arg value="-M" />
+			<arg value="${demo.dir}/AndroidManifest.xml" />
+			<arg value="-A" />
+			<arg value="${demo.dir}/assets" />
+			<arg value="-S" />
+			<arg value="${demo.dir}/res" />
+			<arg value="-I" />
+			<arg value="${android-jar}" />
+			<arg value="-F" />
+			<arg value="${resources-package}" />
+			<arg value="--auto-add-overlay" />
+		</exec>
+	</target>
+	<!-- 打包成未签证的apk -->
+	<target name="demo-package" depends="demo-dex, package-res-and-assets">
+		<echo>Packaging unsigned apk for release...</echo>
+		<java classname="com.android.sdklib.build.ApkBuilderMain">
+			<classpath>
+              <path location="${jarfile}"></path>
+			</classpath>
+			<arg value="${out-unsigned-package-ospath}" />
+			<arg value="-u" />
+			<arg value="-z" />
+			<arg value="${resources-package}" />
+			<arg value="-f" />
+			<arg value="${outdir-bin}/classes.dex" />
+			<arg value="-rf" />
+			<arg value="${demo.dir}/src" />
+			<arg value="-rj"/>
+			<arg value="${demo.dir}/libs"/>
+			<arg value="-nf"/>
+			<arg value="${demo.dir}/libs"/>
+		</java>
+		<echo>It will need to be signed with jarsigner before being published.
+		</echo>
+	</target>
+	<!-- 对apk进行签证 -->
+	<target name="jarsigner" depends="demo-package">
+		<echo>Packaging signed apk for release...</echo>
+		<exec executable="${jarsigner}" failonerror="true">
+			<arg value="-keystore" />
+			<arg value="${keystore-file}" />
+			<arg value="-storepass" />
+			<arg value="android" />
+			<arg value="-keypass" />
+			<arg value="android" />
+			<arg value="-digestalg"/> 
+			<arg value="SHA1"/> 
+			<arg value="-sigalg"/> 
+			<arg value="MD5withRSA"/>
+			<arg value="-signedjar" />
+			<arg value="${out-signed-package-ospath}" />
+			<arg value="${out-unsigned-package-ospath}" />
+			<arg value="androiddebugkey"/>
+		</exec>
+		<copy todir="${lib.dir}" file ="${out-signed-package-ospath}" />
+	</target>
+	<!-- 清除本地文件 -->
+    <target name="build-all" description="remove all temporary files" depends="proguard-jar,javadoc,jarsigner">
+		<zip destfile="${zip.name}" basedir="${lib.dir}" />  
+        <echo message="*** build SDK release succeess ***" />
+    </target>
+</project>
