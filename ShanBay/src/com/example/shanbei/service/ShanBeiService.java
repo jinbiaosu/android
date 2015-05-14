@@ -2,8 +2,10 @@ package com.example.shanbei.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.shanbei.HttpUtils;
+import com.example.shanbei.SPUtils;
 import com.example.shanbei.ShanBeiConstant;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -33,9 +35,9 @@ public class ShanBeiService extends Service {
 		cb.setPrimaryClip(ClipData.newPlainText("", ""));
 		cb.addPrimaryClipChangedListener(new OnPrimaryClipChangedListener() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onPrimaryClipChanged() {
-//				Toast.makeText(getApplicationContext(), cb.getText().toString(), Toast.LENGTH_LONG).show();
 				wordSelectedString=cb.getText().toString();
 				new MyThread1().start();
 			}
@@ -46,32 +48,39 @@ public class ShanBeiService extends Service {
 	class MyThread1 extends Thread {
 		@Override
 		public void run() {
-			String resultString = null;
 			String word=null;
 			try {
-//				resultString = HttpUtils.doHttpsGet(ShanBeiConstant.URL_ACCOUNT_INFO);
-				word=queryWord(ShanBeiConstant.URL_QUERY_WORD);
+				String tokenString=SPUtils.getString(getApplicationContext(), "token");
+				String queryUrlString=null;
+				if(tokenString!=null){
+					queryUrlString=ShanBeiConstant.URL_QUERY_WORD+tokenString+"&word=";
+				}
+				if (queryUrlString!=null) {
+					word=queryWord(queryUrlString);	
+				}
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			Message msg = new Message();
 			Bundle data = new Bundle();
-//			data.putString("info", resultString);
 			data.putString("word", word);
 			msg.setData(data);
 			handler.sendMessage(msg);
 
 		}
 	}
-	Handler handler = new Handler() {
+	@SuppressLint("HandlerLeak") Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
 			Bundle data = msg.getData();
-//			String resultString = data.getString("info");
 			String word=data.getString("word");
-//			Log.d(TAG, resultString + "");
 			Log.d(TAG, word + "");
 			jsonResultString=word;
+			if(getWordTranslate(jsonResultString)==null){
+				Toast.makeText(getApplicationContext(), "you input is not a english word !!", Toast.LENGTH_LONG).show();
+				return;
+			}
 			Toast.makeText(getApplicationContext(), getWordTranslate(jsonResultString), Toast.LENGTH_LONG).show();
 		}
 	};
@@ -93,16 +102,13 @@ public class ShanBeiService extends Service {
 	}
 	public String getWordTranslate(String jsonString) {
 		String resultString = null;
-//		JSONObject dataJsonObject=JSONObject.parseObject(jsonString);
-//		Log.d(TAG, "dataJsonObject : "+dataJsonObject);
-//
-//		String definition=dataJsonObject.getString("data");
-//		JSONObject definitionJsonObject=JSONObject.parseObject(definition);
-//		resultString=definitionJsonObject.getString("definition");
-//		
+		try {
+			resultString=JSONObject.parseObject(JSONObject.parseObject(jsonString).getString("data")).getString("definition");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		resultString=JSONObject.parseObject(JSONObject.parseObject(jsonString).getString("data")).getString("definition");
-		Log.d("definition", resultString);
+		Log.d("definition", resultString+"");
 		return resultString;
 
 	}
