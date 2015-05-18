@@ -6,6 +6,11 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 public class BooleanUtils {
+	/**
+	 * null return TRUE;else return false
+	 * @param value
+	 * @return
+	 */
 	public static boolean isNull(String value) {
 		value = value.trim();
 		if (value == null || "".equals(value)) {
